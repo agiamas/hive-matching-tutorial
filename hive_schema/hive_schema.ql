@@ -21,3 +21,11 @@ select * from sentevents join recvevents on (sentevents.uuid = recvevents.uuid) 
 #Unique Responses on received date
 select count(distinct(sentevents.uuid)) from sentevents join recvevents on (sentevents.uuid = recvevents.uuid) where unix_timestamp(sentevents.rdate) < unix_timestamp(recvevents.rdate);
 
+
+#multiple responses on sentdate grouped by hour by datediff.
+select sentevents.sdate, datediff(recvevents.rdate,sentevents.sdate), count(distinct(sentevents.uuid)) from sentevents join r\
+ecvevents on (sentevents.uuid = recvevents.uuid) where unix_timestamp(sentevents.sdate)<unix_timestamp(recvevents.rdate) grou\
+p by datediff(recvevents.rdate, sentevents.sdate), sentevents.sdate;
+ 
+#unique responses on sentdate grouped by hour by datediff.
+## TBD ##
